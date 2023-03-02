@@ -3,7 +3,11 @@
       "input-default": "<input type=\"$type$\" formControlName=\"$formControlName$\" placeholder=\"$label$\">"
     },
     "layouts": {
-      "section": "<section></section>"
+      "section": "<section></section>",
+      "container-fluid px-0": "<div class=\"container-fluid px-0\"></div>",
+      "container-fluid": "<div class=\"container-fluid\"></div>",
+      "background-holder":"<div class=\"bg-holder bg-auth-card-overlay\" style=\"background-image:url(./assets/img/bg/37.png);\"></div>",
+      "card-centered":"<div class=\"row flex-center position-relative min-vh-100 g-0 py-5\"><div class=\"col-11 col-sm-10 col-xl-8\"><div class=\"card border border-300 auth-card\"><div class=\"card-body pe-md-0\"><div class=\"row align-items-center gx-0 gy-5\"></div></div></div></div></div>"
     },
     "forms": {
       "form": {
