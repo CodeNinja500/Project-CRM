@@ -11,7 +11,7 @@ const routes: Routes = [
     redirectTo: '/auth/login',
     pathMatch: 'full'
   },
-  { path: '/leads', component: LeadsComponent }
+  { path: 'leads', component: LeadsComponent }
 ];
 
 @NgModule({
