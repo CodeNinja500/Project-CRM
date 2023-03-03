@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
@@ -17,7 +17,7 @@ export class SignInComponent {
     rememberMe: new FormControl(true)
   });
 
-  constructor(private _router: Router, private _authService: AuthService) {}
+  constructor(private _router: Router, private _authService: AuthService, private _cdr: ChangeDetectorRef) {}
 
   onLoginFormSubmited(loginForm: FormGroup): void {
     if (loginForm.valid) {
@@ -28,7 +28,11 @@ export class SignInComponent {
         })
         .pipe(take(1))
         .subscribe({
-          next: (x) => this._router.navigate(['/leads'])
+          next: (x) => this._router.navigate(['/leads']),
+          error: (e) => {
+            loginForm.setErrors({ errorFromServer: e.error.message });
+            this._cdr.detectChanges();
+          }
         });
     }
   }
