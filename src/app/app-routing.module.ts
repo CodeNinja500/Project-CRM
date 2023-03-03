@@ -4,10 +4,10 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
 
 const routes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
+  { path: 'auth/login', component: SignInComponent },
   {
     path: '',
-    redirectTo: '/sign-in',
+    redirectTo: '/auth/login',
     pathMatch: 'full'
   }
 ];
