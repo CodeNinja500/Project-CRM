@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { take } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,5 +17,17 @@ export class SignInComponent {
     rememberMe: new FormControl(true)
   });
 
-  onLoginFormSubmited(loginForm: FormGroup): void {}
+  constructor(private _router: Router, private _authService: AuthService) {}
+
+  onLoginFormSubmited(loginForm: FormGroup): void {
+    if (loginForm.valid) {
+      this._authService
+        .login({
+          email: loginForm.get('email')?.value,
+          password: loginForm.get('password')?.value
+        })
+        .pipe(take(1))
+        .subscribe();
+    }
+  }
 }
