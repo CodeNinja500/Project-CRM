@@ -34,6 +34,9 @@
                                             <div class="form-icon-container">
                                                 <input class="form-control form-icon-input" type="email" placeholder="name@example.com"
                                                     formControlName='email' />
+                                                <div class="text-danger fs--1" *ngIf="loginForm.touched && loginForm.get('email')?.errors">
+                                                    Invalid email
+                                                </div>
                                                 <span class="fas fa-user text-900 fs--1 form-icon"></span>
                                             </div>
                                         </div>
@@ -42,6 +45,10 @@
                                             <div class="form-icon-container">
                                                 <input class="form-control form-icon-input" type="password" placeholder="Password"
                                                     formControlName='password' />
+                                                <div class="text-danger fs--1"
+                                                    *ngIf="loginForm.touched && loginForm.get('password')?.hasError('required')">
+                                                    Password is required
+                                                </div>
                                                 <span class="fas fa-key text-900 fs--1 form-icon"></span>
                                             </div>
                                         </div>
