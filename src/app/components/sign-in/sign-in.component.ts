@@ -27,7 +27,9 @@ export class SignInComponent {
           password: loginForm.get('password')?.value
         })
         .pipe(take(1))
-        .subscribe();
+        .subscribe({
+          next: (x) => this._router.navigate(['/leads'])
+        });
     }
   }
 }
