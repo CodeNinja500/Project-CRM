@@ -50,11 +50,7 @@ export class AuthService {
   private _me$: Observable<UserModel> = this._httpClient
     .get<AuthMeResponse<UserModel>>(`${environment.apiUrl}/auth/me`)
     .pipe(
-      map((response) => ({
-        user_id: response.data.user.user_id,
-        email: response.data.user.email,
-        email_verified: response.data.user.email_verified
-      })),
+      map((response) => response.data.user.context),
       shareReplay(1)
     );
 
