@@ -1,0 +1,53 @@
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        <nav class="navbar navbar-top navbar-expand" id="navbarDefault">
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="navbar-logo">
+                    <a class="navbar-brand me-1 me-sm-3" href="./index.html">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center"><img src="./assets/img/icons/logo.png" alt="phoenix" width="27" />
+                                <p class="logo-text ms-2 d-none d-sm-block">phoenix</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <ul class="navbar-nav navbar-nav-icons flex-row">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false" (click)="toggleUserMenu()">
+                            <div class="avatar avatar-l ">
+                                <img class="rounded-circle " src="../../assets/img/team/40x40/57.webp" alt="" />
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
+                            [ngClass]="{show: isUserMenuVisible$|async}" aria-labelledby="navbarDropdownUser" data-bs-popper="static">
+                            <div class="card position-relative border-0">
+                                <div class="card-body p-0">
+                                    <div class="text-center pt-4 pb-3">
+                                        <div class="avatar avatar-xl ">
+                                            <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="">
+                                        </div>
+                                        <h6 class="mt-2 text-black">Jerry Seinfield</h6>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0 border-top">
+                                    <div class="px-3 mt-3">
+                                        <a class="btn btn-phoenix-secondary d-flex flex-center w-100" (click)="signUserOut()">
+                                            <span data-feather="log-out">
+                                            </span>Sign out</a>
+                                    </div>
+                                    <div class="my-2 text-center fw-bold fs--2 text-600">
+                                        <a class="text-600 me-1">Privacy
+                                            policy</a>&bull;
+                                        <a class="text-600 mx-1">Terms</a>&bull;
+                                        <a class="text-600 ms-1">Cookies</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</main>
