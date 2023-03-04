@@ -12,12 +12,18 @@ import { SignOutComponent } from './components/sign-out/sign-out.component';
 import { SignOutComponentModule } from './components/sign-out/sign-out.component-module';
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
+import { AutoLoginGuard } from './guards/auto-login.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { ProfileCompletedGuard } from './guards/profile-completed.guard';
 import { VerifedGuard } from './guards/verifed.guard';
 
 const routes: Routes = [
-  { path: 'auth/login', component: SignInComponent },
+  {
+    path: 'auth/login',
+    component: SignInComponent,
+    data: { redirectAutoLogin: '/auth/login' },
+    canActivate: [AutoLoginGuard]
+  },
   {
     path: '',
     redirectTo: '/auth/login',
