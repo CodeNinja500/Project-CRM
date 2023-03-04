@@ -32,8 +32,10 @@ export const passwordsMatch: ValidatorFn = (control: AbstractControl): Validatio
   const password = control.get('password')?.value as string;
   const repeatPassword = control.get('repeatPassword')?.value as string;
 
-  if (password && repeatPassword) {
-    password === repeatPassword ? null : { passwordsMatch: true };
+  if (!password || !repeatPassword) return null;
+  if (password !== repeatPassword) {
+    control.get('repeatPassword')?.setErrors({ passwordMatch: 'Passwords do not match' });
+    return { passwordsMatch: 'Passwords do not match' };
   }
   return null;
 };
@@ -60,7 +62,7 @@ export class RegisterComponent {
       repeatPassword: new FormControl('', [Validators.required]),
       termsPolicy: new FormControl(false, [Validators.requiredTrue])
     },
-    { validators: passwordsMatch }
+    [passwordsMatch]
   );
 
   constructor(private _authService: AuthService, private _router: Router) {}

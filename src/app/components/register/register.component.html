@@ -28,29 +28,66 @@
                                 <div class="mb-3 text-start">
                                     <label class="form-label" for="name">Name</label>
                                     <input class="form-control" formControlName='name' id="name" type="text" placeholder="Name" />
+                                    <div class="text-danger fs--1" *ngIf="registerForm.touched && registerForm.get('name')?.errors">
+                                        Invalid name
+                                    </div>
                                 </div>
                                 <div class="mb-3 text-start">
                                     <label class="form-label" for="email">Email address</label>
                                     <input class="form-control" formControlName='email' id="email" type="email"
                                         placeholder="name@example.com" />
+                                    <div class="text-danger fs--1" *ngIf="registerForm.touched && registerForm.get('email')?.errors">
+                                        Invalid email
+                                    </div>
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col-xl-6">
                                         <label class="form-label" for="password">Password</label>
                                         <input class="form-control form-icon-input" formControlName='password' id="password" type="password"
                                             placeholder="Password" />
+                                        <div class="text-danger fs--1"
+                                            *ngIf="registerForm.touched && registerForm.get('password')?.hasError('required')">
+                                            Password is required
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('minlength')">
+                                            Password need to have min {{registerForm.get('password')?.getError('minlength').requiredLength}}
+                                            characters
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSmallLetter')">
+                                            Small letter
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasCapitalLetter')">
+                                            Capital Letter
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSpecialSign')">
+                                            Capital Special Sign
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasNumber')">
+                                            Number
+                                        </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <label class="form-label" for="confirmPassword">Confirm Password</label>
                                         <input class="form-control form-icon-input" formControlName='repeatPassword' id="confirmPassword"
                                             type="password" placeholder="Confirm Password" />
+                                        <div class="text-danger fs--1"
+                                            *ngIf="registerForm.touched && registerForm.get('repeatPassword')?.hasError('required')">
+                                            You must repeat your password
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="registerForm.hasError('passwordsMatch')">
+                                            Passwords do not match
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-check mb-3">
+
                                     <input class="form-check-input" formControlName='termsPolicy' id="termsService" type="checkbox" />
                                     <label class="form-label fs--1 text-none" for="termsService">I accept the <a href="#!">terms
                                         </a>and <a href="#!">privacy policy</a>
                                     </label>
+                                    <div class="text-danger fs--1" *ngIf="registerForm.touched && registerForm.get('termsPolicy')?.errors">
+                                        You must accept the terms
+                                    </div>
                                 </div>
                                 <button class="btn btn-primary w-100 mb-3" [disabled]="!registerForm.valid"
                                     (click)="onRegisterFormSubmitted(registerForm)">Sign up</button>
