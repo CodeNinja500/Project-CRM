@@ -22,7 +22,44 @@
                             <img class="auth-title-box-img d-light-none" src="./assets/img/spot-illustrations/auth-dark.png" alt="" />
                         </div>
                     </div>
-                    <div class="col mx-auto"></div>
+                    <div class="col mx-auto">
+                        <div class="auth-form-box">
+                            <form [formGroup]="registerForm">
+                                <div class="mb-3 text-start">
+                                    <label class="form-label" for="name">Name</label>
+                                    <input class="form-control" formControlName='name' id="name" type="text" placeholder="Name" />
+                                </div>
+                                <div class="mb-3 text-start">
+                                    <label class="form-label" for="email">Email address</label>
+                                    <input class="form-control" formControlName='email' id="email" type="email"
+                                        placeholder="name@example.com" />
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input class="form-control form-icon-input" formControlName='password' id="password" type="password"
+                                            placeholder="Password" />
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                                        <input class="form-control form-icon-input" formControlName='repeatPassword' id="confirmPassword"
+                                            type="password" placeholder="Confirm Password" />
+                                    </div>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" formControlName='termsPolicy' id="termsService" type="checkbox" />
+                                    <label class="form-label fs--1 text-none" for="termsService">I accept the <a href="#!">terms
+                                        </a>and <a href="#!">privacy policy</a>
+                                    </label>
+                                </div>
+                                <button class="btn btn-primary w-100 mb-3">Sign up</button>
+                                <div class="text-center">
+                                    <a class="fs--1 fw-bold" href="/auth/login">Sign in to an existing
+                                        account</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
