@@ -52,7 +52,7 @@
                                         </a>and <a href="#!">privacy policy</a>
                                     </label>
                                 </div>
-                                <button class="btn btn-primary w-100 mb-3">Sign up</button>
+                                <button class="btn btn-primary w-100 mb-3" [disabled]="!registerForm.valid">Sign up</button>
                                 <div class="text-center">
                                     <a class="fs--1 fw-bold" href="/auth/login">Sign in to an existing
                                         account</a>
