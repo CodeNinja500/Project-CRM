@@ -6,6 +6,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { RegisterComponentModule } from './components/register/register.component-module';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
+import { VerifyComponent } from './components/verify/verify.component';
+import { VerifyComponentModule } from './components/verify/verify.component-module';
 
 const routes: Routes = [
   { path: 'auth/login', component: SignInComponent },
@@ -15,11 +17,18 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   { path: 'auth/register', component: RegisterComponent },
+  { path: 'verify', component: VerifyComponent },
   { path: 'leads', component: LeadsComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), SignInComponentModule, RegisterComponentModule, LeadsComponentModule],
+  imports: [
+    RouterModule.forRoot(routes),
+    SignInComponentModule,
+    RegisterComponentModule,
+    VerifyComponentModule,
+    LeadsComponentModule
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
