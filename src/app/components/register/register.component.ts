@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -65,7 +65,7 @@ export class RegisterComponent {
     [passwordsMatch]
   );
 
-  constructor(private _authService: AuthService, private _router: Router) {}
+  constructor(private _authService: AuthService, private _router: Router, private _cdr: ChangeDetectorRef) {}
 
   onRegisterFormSubmitted(registerForm: FormGroup): void {
     if (registerForm.valid) {
@@ -78,6 +78,10 @@ export class RegisterComponent {
         .subscribe({
           next: (x) => {
             this._router.navigate(['/leads']);
+          },
+          error: (e) => {
+            registerForm.setErrors({ errorFromServer: e.error.message });
+            this._cdr.detectChanges();
           }
         });
     }
