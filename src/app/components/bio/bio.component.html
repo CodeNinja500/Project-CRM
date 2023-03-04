@@ -27,6 +27,17 @@
                             <h2 class="text-1000"> <span class="fw-normal">Hello </span>John Smith</h2>
                             <p class="text-700">Write down something about yourself</p>
                         </div>
+                        <div class="auth-form-box">
+                            <div class="auth-form-box">
+                                <div class="auth-form-box">
+                                    <form [formGroup]="bioForm">
+                                        <textarea class="form-control mb-3" formControlName="bioText" placeholder="Bio Text"
+                                            rows="8"></textarea>
+                                        <button class="btn btn-primary w-100" (click)="onBioFormSubmitted(bioForm)">Send</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
