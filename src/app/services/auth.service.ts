@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { UserCredentialsModel } from '../models/user-credentials.model';
 import { AuthLoginResponse } from '../responses/auth-login.response';
 import { environment } from 'src/environments/environment';
@@ -43,6 +43,12 @@ export class AuthService {
       })),
       tap((tokens) => this.logInUser(tokens, false))
     );
+  }
+
+  private _me$: Observable<void> = this._httpClient.get<void>(`${environment.apiUrl}/auth/me`).pipe(shareReplay(1));
+
+  public me(): Observable<void> {
+    return this._me$;
   }
 
   private logInUser(tokens: UserCredentialsModel, rememberMe: boolean): void {
