@@ -27,6 +27,6 @@ export class LeadsComponent {
 
   public signUserOut(): void {
     this._authService.logOutUser();
-    this._router.navigate(['/auth/login']);
+    this._router.navigate(['/logged-out']);
   }
 }
