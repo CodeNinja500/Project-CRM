@@ -11,6 +11,7 @@ export class ProfileCompletedGuard implements CanActivate {
   constructor(private _userService: UserService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+    console.log('complete profile activated');
     return this._userService.checkUserBio().pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404) {
@@ -18,7 +19,11 @@ export class ProfileCompletedGuard implements CanActivate {
         }
         return throwError(() => error);
       }),
-      map((response) => (response === 'notCompleted' ? this._router.parseUrl('/complete-profile') : true))
+      map((response) =>
+        response === 'notCompleted'
+          ? this._router.parseUrl(route.data['redirectCompleteProfileUrl'] || '/complete-profile')
+          : true
+      )
     );
   }
 }
