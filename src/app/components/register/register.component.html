@@ -49,21 +49,25 @@
                                             *ngIf="registerForm.touched && registerForm.get('password')?.hasError('required')">
                                             Password is required
                                         </div>
-                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('minlength')">
-                                            min {{registerForm.get('password')?.getError('minlength').requiredLength}}
-                                            characters required
-                                        </div>
-                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSmallLetter')">
-                                            min 1 small letter required
-                                        </div>
-                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasCapitalLetter')">
-                                            min 1 capital letter required
-                                        </div>
-                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSpecialSign')">
-                                            min 1 special sign required
-                                        </div>
-                                        <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasNumber')">
-                                            min 1 number required
+                                        <div
+                                            *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
+                                            <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('minlength')">
+                                                min {{registerForm.get('password')?.getError('minlength').requiredLength}}
+                                                characters required
+                                            </div>
+                                            <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSmallLetter')">
+                                                min 1 small letter required
+                                            </div>
+                                            <div class="text-danger fs--1"
+                                                *ngIf="registerForm.get('password')?.hasError('hasCapitalLetter')">
+                                                min 1 capital letter required
+                                            </div>
+                                            <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasSpecialSign')">
+                                                min 1 special sign required
+                                            </div>
+                                            <div class="text-danger fs--1" *ngIf="registerForm.get('password')?.hasError('hasNumber')">
+                                                min 1 number required
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
