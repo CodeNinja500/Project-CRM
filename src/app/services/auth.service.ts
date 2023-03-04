@@ -53,4 +53,10 @@ export class AuthService {
       this._storage.setItem('refreshToken', tokens.refreshToken);
     }
   }
+
+  public logOutUser(): void {
+    this._accessTokenSubject.next(null);
+    this._refreshTokenSubject.next(null);
+    this._storage.clear();
+  }
 }
