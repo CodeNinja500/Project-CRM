@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { UserCredentialsModel } from '../models/user-credentials.model';
 import { AuthLoginResponse } from '../responses/auth-login.response';
 import { environment } from 'src/environments/environment';
+import { RegisterResponse } from '../responses/register.response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,6 +33,16 @@ export class AuthService {
         })),
         tap((tokens) => this.logInUser(tokens, rememberMe))
       );
+  }
+
+  public register(login: { email: string; password: string }): Observable<UserCredentialsModel> {
+    return this._httpClient.post<RegisterResponse>(`${environment.apiUrl}/auth/register2`, { data: login }).pipe(
+      map((resposne) => ({
+        accessToken: resposne.data.user.stsTokenManager.accessToken,
+        refreshToken: resposne.data.user.stsTokenManager.refreshToken
+      })),
+      tap((tokens) => this.logInUser(tokens, false))
+    );
   }
 
   private logInUser(tokens: UserCredentialsModel, rememberMe: boolean): void {
