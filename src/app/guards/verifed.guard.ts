@@ -11,6 +11,7 @@ export class VerifedGuard implements CanActivate {
   constructor(private _userService: UserService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+    console.log('verify guard activated');
     return this._userService.me().pipe(
       map((response) => {
         console.log(response.email_verified);
