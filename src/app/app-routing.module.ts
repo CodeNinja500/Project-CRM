@@ -8,6 +8,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
+import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { VerifedGuard } from './guards/verifed.guard';
 
 const routes: Routes = [
@@ -19,7 +20,15 @@ const routes: Routes = [
   },
   { path: 'auth/register', component: RegisterComponent },
   { path: 'verify', component: VerifyComponent },
-  { path: 'leads', component: LeadsComponent, canActivate: [VerifedGuard] }
+  {
+    path: 'leads',
+    component: LeadsComponent,
+    data: {
+      redirectLoginUrl: '/auth/login',
+      redirectVerifyUrl: '/verify'
+    },
+    canActivate: [IsLoggedInGuard, VerifedGuard]
+  }
 ];
 
 @NgModule({
