@@ -31,8 +31,18 @@
                             <div class="auth-form-box">
                                 <div class="auth-form-box">
                                     <form [formGroup]="bioForm">
-                                        <textarea class="form-control mb-3" formControlName="bioText" placeholder="Bio Text"
+                                        <textarea class="form-control mb-3" formControlName="bioText" placeholder="Write bio here..."
                                             rows="8"></textarea>
+                                        <div class="text-danger fs--1"
+                                            *ngIf="bioForm.touched && bioForm.get('bioText')?.hasError('required')">
+                                            Please write something about yourself
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="bioForm.get('bioText')?.hasError('minTenWords')">
+                                            Your text has to have at least 10 words
+                                        </div>
+                                        <div class="text-danger fs--1" *ngIf="bioForm.get('bioText')?.hasError('minTwoSentences')">
+                                            Your text has to have at least 2 sentences
+                                        </div>
                                         <button class="btn btn-primary w-100" (click)="onBioFormSubmitted(bioForm)"
                                             [disabled]="!bioForm.valid">Send</button>
                                     </form>
