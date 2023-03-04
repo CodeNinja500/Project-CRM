@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BioComponent } from './components/bio/bio.component';
+import { BioComponentModule } from './components/bio/bio.component-module';
 import { LeadsComponent } from './components/leads/leads.component';
 import { LeadsComponentModule } from './components/leads/leads.component-module';
 import { RegisterComponent } from './components/register/register.component';
@@ -20,6 +22,7 @@ const routes: Routes = [
   },
   { path: 'auth/register', component: RegisterComponent },
   { path: 'verify', component: VerifyComponent },
+  { path: 'complete-profile', component: BioComponent },
   {
     path: 'leads',
     component: LeadsComponent,
@@ -37,6 +40,7 @@ const routes: Routes = [
     SignInComponentModule,
     RegisterComponentModule,
     VerifyComponentModule,
+    BioComponentModule,
     LeadsComponentModule
   ],
   exports: [RouterModule]
