@@ -21,10 +21,10 @@
                         </div>
                     </div>
                     <div class="col mx-auto">
-                        <div class="text-center mb-5">
+                        <div class="text-center mb-5" *ngIf="userDetails$|async as userDetails">
                             <div class="avatar avatar-4xl mb-4"><img class="rounded-circle" src="./assets/img/team/30.webp" alt="" />
                             </div>
-                            <h2 class="text-1000"> <span class="fw-normal">Hello </span>John Smith</h2>
+                            <h2 class="text-1000"> <span class="fw-normal">Hello </span>{{userDetails.email}}</h2>
                             <p class="text-700">Write down something about yourself</p>
                         </div>
                         <div class="auth-form-box">
