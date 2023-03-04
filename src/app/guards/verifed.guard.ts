@@ -13,7 +13,9 @@ export class VerifedGuard implements CanActivate {
     return this._authService.me().pipe(
       map((response) => {
         console.log(response.email_verified);
-        return response.email_verified === true ? true : this._router.parseUrl('/verify');
+        return response.email_verified === true
+          ? true
+          : this._router.parseUrl(route.data['redirectVerifyUrl'] || '/verify');
       })
     );
   }
