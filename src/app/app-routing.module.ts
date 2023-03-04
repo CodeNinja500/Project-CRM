@@ -37,7 +37,8 @@ const routes: Routes = [
     component: LeadsComponent,
     data: {
       redirectLoginUrl: '/auth/login',
-      redirectVerifyUrl: '/verify'
+      redirectVerifyUrl: '/verify',
+      redirectCompleteProfileUrl: '/complete-profile'
     },
     canActivate: [IsLoggedInGuard, VerifedGuard, ProfileCompletedGuard]
   },
