@@ -8,6 +8,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
+import { VerifedGuard } from './guards/verifed.guard';
 
 const routes: Routes = [
   { path: 'auth/login', component: SignInComponent },
@@ -18,7 +19,7 @@ const routes: Routes = [
   },
   { path: 'auth/register', component: RegisterComponent },
   { path: 'verify', component: VerifyComponent },
-  { path: 'leads', component: LeadsComponent }
+  { path: 'leads', component: LeadsComponent, canActivate: [VerifedGuard] }
 ];
 
 @NgModule({
