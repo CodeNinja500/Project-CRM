@@ -6,6 +6,8 @@ import { UserCredentialsModel } from '../models/user-credentials.model';
 import { AuthLoginResponse } from '../responses/auth-login.response';
 import { environment } from 'src/environments/environment';
 import { RegisterResponse } from '../responses/register.response';
+import { UserModel } from '../models/user.model';
+import { AuthMeResponse } from '../responses/auth-me.response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -45,9 +47,18 @@ export class AuthService {
     );
   }
 
-  private _me$: Observable<void> = this._httpClient.get<void>(`${environment.apiUrl}/auth/me`).pipe(shareReplay(1));
+  private _me$: Observable<UserModel> = this._httpClient
+    .get<AuthMeResponse<UserModel>>(`${environment.apiUrl}/auth/me`)
+    .pipe(
+      map((response) => ({
+        user_id: response.data.user.user_id,
+        email: response.data.user.email,
+        email_verified: response.data.user.email_verified
+      })),
+      shareReplay(1)
+    );
 
-  public me(): Observable<void> {
+  public me(): Observable<UserModel> {
     return this._me$;
   }
 
