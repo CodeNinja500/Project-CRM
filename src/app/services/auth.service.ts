@@ -57,6 +57,7 @@ export class AuthService {
   public logOutUser(): void {
     this._accessTokenSubject.next(null);
     this._refreshTokenSubject.next(null);
-    this._storage.clear();
+    this._storage.removeItem('accessToken');
+    this._storage.removeItem('refreshToken');
   }
 }
