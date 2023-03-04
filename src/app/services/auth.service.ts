@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { UserCredentialsModel } from '../models/user-credentials.model';
 import { AuthLoginResponse } from '../responses/auth-login.response';
 import { environment } from 'src/environments/environment';
 import { RegisterResponse } from '../responses/register.response';
-import { UserModel } from '../models/user.model';
-import { AuthMeResponse } from '../responses/auth-me.response';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
