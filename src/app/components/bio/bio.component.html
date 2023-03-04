@@ -33,7 +33,8 @@
                                     <form [formGroup]="bioForm">
                                         <textarea class="form-control mb-3" formControlName="bioText" placeholder="Bio Text"
                                             rows="8"></textarea>
-                                        <button class="btn btn-primary w-100" (click)="onBioFormSubmitted(bioForm)">Send</button>
+                                        <button class="btn btn-primary w-100" (click)="onBioFormSubmitted(bioForm)"
+                                            [disabled]="!bioForm.valid">Send</button>
                                     </form>
                                 </div>
                             </div>
