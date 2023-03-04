@@ -43,6 +43,10 @@
                                         <div class="text-danger fs--1" *ngIf="bioForm.get('bioText')?.hasError('minTwoSentences')">
                                             Your text has to have at least 2 sentences
                                         </div>
+                                        <div class="text-danger text-center fs--1"
+                                            *ngIf="bioForm.touched && bioForm.hasError('errorFromServer')">
+                                            {{bioForm.getError('errorFromServer')}}
+                                        </div>
                                         <button class="btn btn-primary w-100" (click)="onBioFormSubmitted(bioForm)"
                                             [disabled]="!bioForm.valid">Send</button>
                                     </form>

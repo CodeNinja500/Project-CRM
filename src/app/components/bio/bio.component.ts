@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class BioComponent {
   });
   readonly userDetails$: Observable<UserModel> = this._userService.me();
 
-  constructor(private _userService: UserService, private _router: Router) {}
+  constructor(private _userService: UserService, private _router: Router, private _cdr: ChangeDetectorRef) {}
 
   onBioFormSubmitted(bioForm: FormGroup): void {
     if (bioForm.valid) {
@@ -40,7 +40,11 @@ export class BioComponent {
         .postUserBio(bioForm.get('bioText')?.value)
         .pipe(take(1))
         .subscribe({
-          next: (x) => this._router.navigate(['/leads'])
+          next: (x) => this._router.navigate(['/leads']),
+          error: (e) => {
+            bioForm.setErrors({ errorFromServer: e.error.message });
+            this._cdr.detectChanges();
+          }
         });
     }
   }
