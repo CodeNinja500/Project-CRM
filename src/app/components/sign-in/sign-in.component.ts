@@ -22,10 +22,13 @@ export class SignInComponent {
   onLoginFormSubmited(loginForm: FormGroup): void {
     if (loginForm.valid) {
       this._authService
-        .login({
-          email: loginForm.get('email')?.value,
-          password: loginForm.get('password')?.value
-        })
+        .login(
+          {
+            email: loginForm.get('email')?.value,
+            password: loginForm.get('password')?.value
+          },
+          loginForm.get('rememberMe')?.value
+        )
         .pipe(take(1))
         .subscribe({
           next: (x) => this._router.navigate(['/leads']),
