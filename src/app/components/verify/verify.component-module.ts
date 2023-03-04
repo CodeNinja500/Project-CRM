@@ -7,5 +7,4 @@ import { VerifyComponent } from './verify.component';
   providers: [],
   exports: [VerifyComponent]
 })
-export class VerifyComponentModule {
-}
+export class VerifyComponentModule {}
