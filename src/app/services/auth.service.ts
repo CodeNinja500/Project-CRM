@@ -47,17 +47,6 @@ export class AuthService {
     );
   }
 
-  private _me$: Observable<UserModel> = this._httpClient
-    .get<AuthMeResponse<UserModel>>(`${environment.apiUrl}/auth/me`)
-    .pipe(
-      map((response) => response.data.user.context),
-      shareReplay(1)
-    );
-
-  public me(): Observable<UserModel> {
-    return this._me$;
-  }
-
   private logInUser(tokens: UserCredentialsModel, rememberMe: boolean): void {
     this._accessTokenSubject.next(tokens.accessToken);
     this._refreshTokenSubject.next(tokens.refreshToken);
