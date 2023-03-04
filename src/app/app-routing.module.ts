@@ -11,6 +11,7 @@ import { SignInComponentModule } from './components/sign-in/sign-in.component-mo
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
+import { ProfileCompletedGuard } from './guards/profile-completed.guard';
 import { VerifedGuard } from './guards/verifed.guard';
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
       redirectLoginUrl: '/auth/login',
       redirectVerifyUrl: '/verify'
     },
-    canActivate: [IsLoggedInGuard, VerifedGuard]
+    canActivate: [IsLoggedInGuard, VerifedGuard, ProfileCompletedGuard]
   }
 ];
 
