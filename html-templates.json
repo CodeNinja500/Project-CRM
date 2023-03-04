@@ -1,6 +1,8 @@
 {
     "inputs": {
-      "input-default": "<input type=\"$type$\" formControlName=\"$formControlName$\" placeholder=\"$label$\">"
+      "input-default": "<input type=\"$type$\" formControlName=\"$formControlName$\" placeholder=\"$label$\">",
+      "input-submit":"<button class=\"btn btn-primary w-100\" (click)=\"$submitCallback$\">Send</button>",
+      "input-text-area":"<textarea class=\"form-control mb-3\" formControlName=\"$formControlName$\" placeholder=\"$label$\" rows=\"8\"></textarea>"
     },
     "layouts": {
       "section": "<section></section>",
@@ -17,6 +19,11 @@
         "input": "$inputs.input-default$",
         "formSubmit": "<input type=\"submit\" value=\"$content$\">",
         "form": "<form [formGroup]=\"$formVariable$\" (ngSubmit)=\"$submitCallback$\">$content$</form>"
+      },
+      "form-text-boxes": {
+        "input": "$inputs.input-text-area$",
+        "formSubmit": "$inputs.input-submit$",
+        "form": "<div class=\"auth-form-box\"><form [formGroup]=\"$formVariable$\">$content$</form></div>"
       }
     },
     "lists": {
