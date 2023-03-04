@@ -8,6 +8,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { RegisterComponentModule } from './components/register/register.component-module';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
+import { SignOutComponent } from './components/sign-out/sign-out.component';
+import { SignOutComponentModule } from './components/sign-out/sign-out.component-module';
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
@@ -32,7 +34,8 @@ const routes: Routes = [
       redirectVerifyUrl: '/verify'
     },
     canActivate: [IsLoggedInGuard, VerifedGuard, ProfileCompletedGuard]
-  }
+  },
+  { path: 'logged-out', component: SignOutComponent }
 ];
 
 @NgModule({
@@ -42,7 +45,8 @@ const routes: Routes = [
     RegisterComponentModule,
     VerifyComponentModule,
     BioComponentModule,
-    LeadsComponentModule
+    LeadsComponentModule,
+    SignOutComponentModule
   ],
   exports: [RouterModule]
 })
