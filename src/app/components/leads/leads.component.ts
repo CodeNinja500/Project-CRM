@@ -4,6 +4,7 @@ import { take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LeadsService } from '../../services/leads.service';
+import { LeadModel } from 'src/app/models/lead.model';
 
 @Component({
   selector: 'app-leads',
@@ -15,7 +16,7 @@ export class LeadsComponent {
   private _isUserMenuVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isUserMenuVisible$: Observable<boolean> = this._isUserMenuVisibleSubject.asObservable();
 
-  readonly leadList$: Observable<void> = this._leadsService.getAll();
+  readonly leadList$: Observable<LeadModel[]> = this._leadsService.getAll();
 
   constructor(private _authService: AuthService, private _router: Router, private _leadsService: LeadsService) {}
 
