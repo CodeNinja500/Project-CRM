@@ -50,8 +50,11 @@
             </div>
         </nav>
         <div class="content">
-            <ng-container *ngIf="leadList$ | async as item">
-                <div class="pb-9"><!--CONTENT--></div>
+            <ng-container *ngIf="leadList$ | async as leadList">
+                <div class="pb-9">
+                    <h2 class="mb-4">{{leadList.length}} <ng-container
+                            *ngIf='leadList.length>1;else plural'>Companies</ng-container><ng-template #plural>Company</ng-template> </h2>
+                </div>
             </ng-container>
             <footer class="footer position-absolute">
                 <div class="row g-0 justify-content-between align-items-center h-100">
