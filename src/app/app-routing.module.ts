@@ -41,7 +41,8 @@ const routes: Routes = [
     VerifyComponentModule,
     BioComponentModule,
     LeadsComponentModule,
-    SignOutComponentModule
+    SignOutComponentModule,
+    AuthRoutesModule
   ],
   exports: [RouterModule]
 })
