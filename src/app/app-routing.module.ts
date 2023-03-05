@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: 'auth/login',
     component: SignInComponent,
-    data: { redirectAutoLogin: '/auth/login' },
+    data: { redirectAutoLogin: '/leads' },
     canActivate: [AutoLoginGuard]
   },
   {
