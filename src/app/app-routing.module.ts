@@ -4,52 +4,40 @@ import { BioComponent } from './components/bio/bio.component';
 import { BioComponentModule } from './components/bio/bio.component-module';
 import { LeadsComponent } from './components/leads/leads.component';
 import { LeadsComponentModule } from './components/leads/leads.component-module';
-import { RegisterComponent } from './components/register/register.component';
-import { RegisterComponentModule } from './components/register/register.component-module';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignInComponentModule } from './components/sign-in/sign-in.component-module';
 import { SignOutComponent } from './components/sign-out/sign-out.component';
 import { SignOutComponentModule } from './components/sign-out/sign-out.component-module';
 import { VerifyComponent } from './components/verify/verify.component';
 import { VerifyComponentModule } from './components/verify/verify.component-module';
-import { AutoLoginGuard } from './guards/auto-login.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { ProfileCompletedGuard } from './guards/profile-completed.guard';
 import { VerifedGuard } from './guards/verifed.guard';
+import { AuthRoutesModule } from './routes/auth.routes';
+import { LeadsRoutesModule } from './routes/leads.routes';
 
 const routes: Routes = [
+  { path: 'verify', component: VerifyComponent },
+  { path: 'complete-profile', component: BioComponent },
+  { path: 'logged-out', component: SignOutComponent },
   {
-    path: 'auth/login',
-    component: SignInComponent,
-    data: { redirectAutoLogin: '/leads' },
-    canActivate: [AutoLoginGuard]
+    path: 'auth',
+    loadChildren: () => AuthRoutesModule
   },
   {
     path: '',
-    redirectTo: '/auth/login',
-    pathMatch: 'full'
-  },
-  { path: 'auth/register', component: RegisterComponent },
-  { path: 'verify', component: VerifyComponent },
-  { path: 'complete-profile', component: BioComponent },
-  {
-    path: 'leads',
     component: LeadsComponent,
+    loadChildren: () => LeadsRoutesModule,
     data: {
       redirectLoginUrl: '/auth/login',
       redirectVerifyUrl: '/verify',
       redirectCompleteProfileUrl: '/complete-profile'
     },
     canActivate: [IsLoggedInGuard, VerifedGuard, ProfileCompletedGuard]
-  },
-  { path: 'logged-out', component: SignOutComponent }
+  }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    SignInComponentModule,
-    RegisterComponentModule,
     VerifyComponentModule,
     BioComponentModule,
     LeadsComponentModule,
