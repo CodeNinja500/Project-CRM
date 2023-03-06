@@ -27,4 +27,8 @@ export class UserService {
   public checkUserBio(): Observable<void> {
     return this._httpClient.get<void>(`${environment.apiUrl}/auth/my-bio`);
   }
+
+  public isAdmin(): Observable<boolean> {
+    return this._me$.pipe(map((response) => (response.role === 'admin' ? true : false)));
+  }
 }

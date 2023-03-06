@@ -1,0 +1,114 @@
+<ng-container *ngIf="leadList$|async as leadList">
+    <div class="pb-9">
+        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length>1;else singleLead">Companies</ng-container>
+            <ng-template #singleLead>Company</ng-template>
+        </h2>
+        <div id="dealsTable" data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
+            <div class="row g-3 justify-content-between mb-4">
+                <div class="col-auto">
+                    <div class="d-md-flex justify-content-between">
+                        <div>
+                            <ng-container *ngIf="isAdmin$ | async"><button class="btn btn-primary me-4"><span
+                                        class="fas fa-plus me-2"></span>Create Lead</button></ng-container>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+
+                </div>
+            </div>
+            <div class="px-4 mx-lg-n6 px-lg-6">
+                <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                    <table class="table fs--1 mb-0 leads-table">
+                        <thead>
+                            <tr>
+                                <th class="sort white-space-nowrap align-middle text-uppercase" scope="col" style="width: 5%;">Name</th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Scope</th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Hiring</th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Industry
+                                </th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Location
+                                </th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Size</th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Revenue
+                                </th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Website
+                                    link
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="list" id="deal-tables-body">
+                            <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leadList">
+                                <td class="name align-middle white-space-nowrap">
+                                    <div class="d-flex align-items-center">
+                                        <div><a class="fs-0 fw-bold" [href]="lead.websiteLink">{{lead.name}}</a>
+                                            <div class="d-flex align-items-center justify-content-around">
+                                                <a [href]="lead.linkedinLink"><i class="fa-brands fa-linkedin"></i></a>
+                                                <a [href]="lead.websiteLink"><i class="fa-solid fa-link"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div *ngFor="let tag of lead.activityIds">
+                                            <div><span class="badge badge-phoenix badge-phoenix-warning">{{ tag }}</span></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                    <div>Is hiring: <i class="fa-solid"
+                                            [ngClass]="{'fa-check': lead.hiring.active,'fa-xmark': !lead.hiring.active}"></i></div>
+                                    <div>Juniors: <i class="fa-solid"
+                                            [ngClass]="{'fa-check': lead.hiring.junior,'fa-xmark': !lead.hiring.junior}"></i></div>
+                                    <div>Talent Program: <i class="fa-solid"
+                                            [ngClass]="{'fa-check': lead.hiring.talentProgram,'fa-xmark': !lead.hiring.talentProgram}"></i>
+                                    </div>
+                                </td>
+                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>{{ lead.industry }}</div>
+                                    </div>
+                                </td>
+                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>{{ lead.location}}</div>
+                                    </div>
+                                </td>
+                                <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end">
+                                    <div>Total: {{ lead.companySize.total }}</div>
+                                    <div>Dev: {{lead.companySize.dev}}</div>
+                                    <div>FE: {{lead.companySize.fe}}</div>
+                                </td>
+                                <td class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <div>Total: {{ lead.annualRevenue}}</div>
+                                    </div>
+                                </td>
+                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                    <div class="d-flex align-items-center">
+                                        <a [href]='lead.websiteLink'>
+                                            <div><span class="badge badge-phoenix badge-phoenix-primary">{{lead.websiteLink}}</span></div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
+<footer class="footer position-absolute">
+    <div class="row g-0 justify-content-between align-items-center h-100">
+        <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 mt-2 mt-sm-0 text-900">Thank you for creating with Phoenix<span class="d-none d-sm-inline-block"></span><span
+                    class="d-none d-sm-inline-block mx-1">|</span><br class="d-sm-none" />2023 &copy;</p>
+        </div>
+        <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 text-600">v1.9.0</p>
+        </div>
+    </div>
+</footer>
