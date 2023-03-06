@@ -68,10 +68,10 @@ export class LeadCreateComponent {
         .create({
           name: this.leadInformationForm.get('companyName')?.value,
           websiteLink: this.leadInformationForm.get('websiteLink')?.value,
-          //linkedinLink: this.leadInformationForm.get('linkedinLink')?.value,
+          linkedinLink: this.leadInformationForm.get('linkedinLink')?.value,
           location: this.leadInformationForm.get('location')?.value,
           industry: this.leadInformationForm.get('industry')?.value,
-          annualRevenue: this.leadInformationForm.get('annualRevenue')?.value,
+          annualRevenue: +this.leadInformationForm.get('annualRevenue')?.value,
           activityIds: Object.keys(this.activitiesForm.value).reduce((a: string[], c: string) => {
             if (this.activitiesForm.value[c]) {
               return [...a, c];
