@@ -37,6 +37,10 @@
       "table": {
         "list": "<table>$content$</table>",
         "item": "<tr *ngFor=\"let $itemVariable$ of $listVariable$\"><td>$content$</td></tr>"
+      },
+      "table-bootstrap": {
+        "list": "<div class=\"px-4 mx-lg-n6 px-lg-6\"><div class=\"table-responsive scrollbar mx-n1 px-1 border-top\"><table class=\"table fs--1 mb-0 leads-table\" *ngIf=\"$listVariable$ as list\"><thead><tr><th class=\"sort white-space-nowrap align-middle text-uppercase\" scope=\"col\">Col name</th></tr></thead><tbody class=\"list\" id=\"deal-tables-body\">$content$</tbody></table></div></div>",
+        "item": "<tr class=\"hover-actions-trigger btn-reveal-trigger position-static\" *ngFor=\"let $itemVariable$ of list\"><td class=\"align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end\"><div class=\"d-flex align-items-center\"><div>$content$</div></div></td></tr>"
       }
     },
     "details": {
