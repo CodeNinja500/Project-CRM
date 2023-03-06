@@ -8,7 +8,9 @@
                 <div class="col-auto">
                     <div class="d-md-flex justify-content-between">
                         <div>
-                            <button class="btn btn-primary me-4"><span class="fas fa-plus me-2"></span>Create Lead</button>
+                            <ng-container *ngIf="isAdmin$ | async"><button class="btn btn-primary me-4"><span
+                                        class="fas fa-plus me-2"></span>Create Lead</button></ng-container>
+
                         </div>
                     </div>
                 </div>
