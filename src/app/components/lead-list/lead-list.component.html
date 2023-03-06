@@ -23,7 +23,7 @@
                     <table class="table fs--1 mb-0 leads-table">
                         <thead>
                             <tr>
-                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Name</th>
+                                <th class="sort white-space-nowrap align-middle text-uppercase" scope="col" style="width: 5%;">Name</th>
                                 <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Scope</th>
                                 <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Hiring</th>
                                 <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Industry
@@ -40,9 +40,14 @@
                         </thead>
                         <tbody class="list" id="deal-tables-body">
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leadList">
-                                <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+                                <td class="name align-middle white-space-nowrap">
                                     <div class="d-flex align-items-center">
-                                        <div><a class="fs-0 fw-bold" href="#">{{lead.name}}</a></div>
+                                        <div><a class="fs-0 fw-bold" [href]="lead.websiteLink">{{lead.name}}</a>
+                                            <div class="d-flex align-items-center justify-content-around">
+                                                <a [href]="lead.linkedinLink"><i class="fa-brands fa-linkedin"></i></a>
+                                                <a [href]="lead.websiteLink"><i class="fa-solid fa-link"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                                 <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
@@ -83,7 +88,7 @@
                                 </td>
                                 <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
                                     <div class="d-flex align-items-center">
-                                        <a href=''>
+                                        <a [href]='lead.websiteLink'>
                                             <div><span class="badge badge-phoenix badge-phoenix-primary">{{lead.websiteLink}}</span></div>
                                         </a>
                                     </div>
