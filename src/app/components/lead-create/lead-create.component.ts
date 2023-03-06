@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ActivityModel } from '../../models/activity.model';
@@ -20,20 +20,20 @@ export class LeadCreateComponent {
   readonly statusList$: Observable<string[]> = this._statusService.getAll();
 
   readonly leadInformationForm: FormGroup = new FormGroup({
-    companyName: new FormControl(''),
-    websiteLink: new FormControl(''),
-    linkedinLink: new FormControl(''),
-    location: new FormControl(''),
-    industry: new FormControl(''),
-    annualRevenue: new FormControl('')
+    companyName: new FormControl('', [Validators.required]),
+    websiteLink: new FormControl('', [Validators.required]),
+    linkedinLink: new FormControl('', [Validators.required]),
+    location: new FormControl('', [Validators.required]),
+    industry: new FormControl('', [Validators.required]),
+    annualRevenue: new FormControl('', [Validators.required])
   });
 
   readonly activitiesForm: FormGroup = new FormGroup({});
 
   readonly companySizeForm: FormGroup = new FormGroup({
-    total: new FormControl(''),
-    dev: new FormControl(''),
-    fe: new FormControl('')
+    total: new FormControl('', [Validators.required]),
+    dev: new FormControl('', [Validators.required]),
+    fe: new FormControl('', [Validators.required])
   });
 
   readonly hiringForm: FormGroup = new FormGroup({
@@ -47,7 +47,7 @@ export class LeadCreateComponent {
     activities: this.activitiesForm,
     companySize: this.companySizeForm,
     hiring: this.hiringForm,
-    status: new FormControl(),
+    status: new FormControl('', [Validators.required]),
     notes: new FormControl()
   });
 
