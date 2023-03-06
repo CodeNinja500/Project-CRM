@@ -1,5 +1,5 @@
 export interface UserModel {
-  role: boolean;
+  role: string;
   user_id: string;
   email: string;
   email_verified: boolean;
