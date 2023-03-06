@@ -1,5 +1,3 @@
 export interface LeadsResponse<T> {
-  readonly data: {
-    data: T;
-  }[];
+  readonly data: T[];
 }
