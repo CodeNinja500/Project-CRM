@@ -14,7 +14,7 @@ export class LeadsService {
   getAll(): Observable<LeadModel[]> {
     return this._httpClient
       .get<LeadsResponse<LeadModel>>(`${environment.apiUrl}/leads`)
-      .pipe(map((response) => response.data.map((data) => data.data)));
+      .pipe(map((response) => response.data.map((data) => data)));
   }
 
   create(lead: CreateLeadModel): Observable<void> {
