@@ -4,14 +4,15 @@
             <div class="d-sm-flex justify-content-between">
                 <h2 class="mb-4">Create a new lead</h2>
                 <div class="d-flex mb-3">
-                    <button class="btn btn-phoenix-primary me-2 px-6">Cancel</button>
-                    <button class="btn btn-primary">Create lead</button>
+                    <button class="btn btn-phoenix-primary me-2 px-6" routerLink="/leads">Cancel</button>
+                    <button class="btn btn-primary" [disabled]="!leadForm.valid" (click)="onLeadFormSubmitted">Create
+                        lead</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class=" row">
     <div class="col-xl-12">
         <form class="row g-3 mb-9" [formGroup]="leadForm">
             <ng-container formGroupName='leadInfo'>
@@ -134,7 +135,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-end mt-6">
-                <button class="btn btn-primary">Create lead</button>
+                <button class="btn btn-primary" (click)="onLeadFormSubmitted()" [disabled]="!leadForm.valid">Create lead</button>
             </div>
         </form>
     </div>
