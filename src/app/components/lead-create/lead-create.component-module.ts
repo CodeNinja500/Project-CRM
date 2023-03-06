@@ -1,11 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LeadCreateComponent } from './lead-create.component';
 
 @NgModule({
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   declarations: [LeadCreateComponent],
   providers: [],
   exports: [LeadCreateComponent]
 })
-export class LeadCreateComponentModule {
-}
+export class LeadCreateComponentModule {}
