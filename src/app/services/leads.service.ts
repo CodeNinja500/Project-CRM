@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { LeadModel } from '../models/lead.model';
 import { LeadsResponse } from '../responses/leads.response';
 import { environment } from 'src/environments/environment';
-import { CreateLeadModel } from '../models/create-lead.model';
 
 @Injectable({ providedIn: 'root' })
 export class LeadsService {
@@ -17,7 +16,7 @@ export class LeadsService {
       .pipe(map((response) => response.data.map((data) => data)));
   }
 
-  create(lead: CreateLeadModel): Observable<void> {
+  create(lead: LeadModel): Observable<void> {
     return this._httpClient.post<void>(`${environment.apiUrl}/leads`, { data: lead });
   }
 }
