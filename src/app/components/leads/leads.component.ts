@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-leads',
@@ -14,7 +16,9 @@ export class LeadsComponent {
   private _isUserMenuVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isUserMenuVisible$: Observable<boolean> = this._isUserMenuVisibleSubject.asObservable();
 
-  constructor(private _authService: AuthService, private _router: Router) {}
+  readonly userDetails$: Observable<UserModel> = this._userService.me();
+
+  constructor(private _authService: AuthService, private _router: Router, private _userService: UserService) {}
 
   public toggleUserMenu(): void {
     this.isUserMenuVisible$
