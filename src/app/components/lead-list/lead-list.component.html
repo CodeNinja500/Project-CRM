@@ -1,6 +1,6 @@
-<ng-container *ngIf="leadList$|async as leadList">
+<ng-container *ngIf="leadList$|async as leadList; else loading">
     <div class="pb-9">
-        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length>1;else singleLead">Companies</ng-container>
+        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else singleLead">Companies</ng-container>
             <ng-template #singleLead>Company</ng-template>
         </h2>
         <div id="dealsTable" data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
@@ -24,7 +24,8 @@
                         <thead>
                             <tr>
                                 <th class="sort white-space-nowrap align-middle text-uppercase" scope="col" style="width: 5%;">Name</th>
-                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Scope</th>
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Activities
+                                </th>
                                 <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Hiring</th>
                                 <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" style="width: 5%;">Industry
                                 </th>
@@ -42,10 +43,10 @@
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leadList">
                                 <td class="name align-middle white-space-nowrap">
                                     <div class="d-flex align-items-center">
-                                        <div><a class="fs-0 fw-bold" [href]="lead.websiteLink">{{lead.name}}</a>
+                                        <div><a class="fs-0 fw-bold" [href]="lead.websiteLink" target="_blank">{{lead.name}}</a>
                                             <div class="d-flex align-items-center justify-content-around">
-                                                <a [href]="lead.linkedinLink"><i class="fa-brands fa-linkedin"></i></a>
-                                                <a [href]="lead.websiteLink"><i class="fa-solid fa-link"></i></a>
+                                                <a [href]="lead.linkedinLink" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                                                <a [href]="lead.websiteLink" target="_blank"><i class="fa-solid fa-link"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +87,7 @@
                                 </td>
                                 <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
                                     <div class="d-flex align-items-center">
-                                        <a [href]='lead.websiteLink'>
+                                        <a [href]='lead.websiteLink' target='_blank'>
                                             <div><span class="badge badge-phoenix badge-phoenix-primary">{{lead.websiteLink}}</span></div>
                                         </a>
                                     </div>
@@ -99,6 +100,12 @@
         </div>
     </div>
 </ng-container>
+<ng-template #loading>
+    <div class="d-flex flex-center py-10">
+        <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+    </div>
+
+</ng-template>
 <footer class="footer position-absolute">
     <div class="row g-0 justify-content-between align-items-center h-100">
         <div class="col-12 col-sm-auto text-center">

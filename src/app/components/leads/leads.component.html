@@ -20,14 +20,15 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
-                            [ngClass]="{show: isUserMenuVisible$|async}" aria-labelledby="navbarDropdownUser" data-bs-popper="static">
+                            [ngClass]="{show: isUserMenuVisible$|async}" aria-labelledby="navbarDropdownUser" data-bs-popper="static"
+                            *ngIf="userDetails$|async as userDetails">
                             <div class="card position-relative border-0">
                                 <div class="card-body p-0">
                                     <div class="text-center pt-4 pb-3">
                                         <div class="avatar avatar-xl ">
                                             <img class="rounded-circle " src="assets/img/team/72x72/57.webp" alt="">
                                         </div>
-                                        <h6 class="mt-2 text-black">Jerry Seinfield</h6>
+                                        <h6 class="mt-2 text-black">{{userDetails.email}}</h6>
                                     </div>
                                 </div>
                                 <div class="card-footer p-0 border-top">
