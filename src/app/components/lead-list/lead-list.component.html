@@ -1,6 +1,6 @@
-<ng-container *ngIf="leadList$|async as leadList">
+<ng-container *ngIf="leadList$|async as leadList; else loading">
     <div class="pb-9">
-        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length>1;else singleLead">Companies</ng-container>
+        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else singleLead">Companies</ng-container>
             <ng-template #singleLead>Company</ng-template>
         </h2>
         <div id="dealsTable" data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
@@ -100,6 +100,12 @@
         </div>
     </div>
 </ng-container>
+<ng-template #loading>
+    <div class="d-flex flex-center py-10">
+        <div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>
+    </div>
+
+</ng-template>
 <footer class="footer position-absolute">
     <div class="row g-0 justify-content-between align-items-center h-100">
         <div class="col-12 col-sm-auto text-center">
