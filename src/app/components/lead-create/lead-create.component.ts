@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { ActivityModel } from '../../models/activity.model';
 import { ActivitiesService } from '../../services/activities.service';
 import { StatusService } from '../../services/status.service';
 import { LeadsService } from '../../services/leads.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const minOneSelected: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const howManySelected = Object.keys(control.value).reduce((a: string[], c: string) => {
@@ -73,7 +75,9 @@ export class LeadCreateComponent {
   constructor(
     private _activitiesService: ActivitiesService,
     private _statusService: StatusService,
-    private _leadsService: LeadsService
+    private _leadsService: LeadsService,
+    private _router: Router,
+    private _cdr: ChangeDetectorRef
   ) {}
 
   onActivityListCreateControls(activityList: ActivityModel[]): void {
@@ -109,7 +113,13 @@ export class LeadCreateComponent {
           }
         })
         .pipe(take(1))
-        .subscribe();
+        .subscribe({
+          next: (x) => this._router.navigate(['/leads']),
+          error: (e: HttpErrorResponse) => {
+            this.leadForm.setErrors({ errorFromServer: e.error.message });
+            this._cdr.detectChanges();
+          }
+        });
     } else {
       this.leadForm.markAllAsTouched();
     }
