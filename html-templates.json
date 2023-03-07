@@ -18,7 +18,8 @@
       "large-header":"<h2 class=\"mb-4\">2 Companies</h2>",
       "badge-warning":"<div><span class=\"badge badge-phoenix badge-phoenix-warning\">Badge</span></div>",
       "badge-primary":"<div><span class=\"badge badge-phoenix badge-phoenix-primary\">Badge</span></div>",
-      "text-with-social-links":"<div><a class=\"fs-0 fw-bold\" [href]=\"\">Text</a><div class=\"d-flex align-items-center justify-content-around\"><a [href]=\"\"><i class=\"fa-brands fa-linkedin\"></i></a><a [href]=\"\"><i class=\"fa-solid fa-link\"></i></a></div></div>"
+      "text-with-social-links":"<div><a class=\"fs-0 fw-bold\" [href]=\"\">Text</a><div class=\"d-flex align-items-center justify-content-around\"><a [href]=\"\"><i class=\"fa-brands fa-linkedin\"></i></a><a [href]=\"\"><i class=\"fa-solid fa-link\"></i></a></div></div>",
+      "required-error":"<div class=\"text-danger fs--1\"*ngIf=\"leadInformationForm.get('companyName')?.touched && leadInformationForm.get('companyName')?.hasError('required')\">You must fill this field</div>"
     },
     "forms": {
       "form": {
