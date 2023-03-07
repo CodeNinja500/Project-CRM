@@ -5,7 +5,7 @@
                 <h2 class="mb-4">Create a new lead</h2>
                 <div class="d-flex mb-3">
                     <button class="btn btn-phoenix-primary me-2 px-6" routerLink="/leads">Cancel</button>
-                    <button class="btn btn-primary" [disabled]="!leadForm.valid" (click)="onLeadFormSubmitted">Create
+                    <button class="btn btn-primary" (click)="onLeadFormSubmitted()">Create
                         lead</button>
                 </div>
             </div>
@@ -22,6 +22,10 @@
                         <input class="form-control" formControlName='companyName' id="floatingInputCompanyname" type="text"
                             placeholder="Company name" />
                         <label for="floatingInputCompanyname">Company name</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('companyName')?.touched && leadInformationForm.get('companyName')?.hasError('required')">
+                            You must fill this field
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -29,6 +33,12 @@
                         <input class="form-control" formControlName='websiteLink' id="floatingInputWebsitelink" type="text"
                             placeholder="Website link" />
                         <label for="floatingInputWebsitelink">Website link</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('websiteLink')?.touched && leadInformationForm.get('websiteLink')?.hasError('required')">
+                            You must fill this field</div>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('websiteLink')?.touched && leadInformationForm.get('websiteLink')?.hasError('pattern')">
+                            Link must start with http://www. or https://www. or www.</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -36,6 +46,12 @@
                         <input class="form-control" formControlName='linkedinLink' id="floatingInputLinkedin" type="text"
                             placeholder="Linkedin link" />
                         <label for="floatingInputLinkedin">Linkedin link</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('linkedinLink')?.touched && leadInformationForm.get('linkedinLink')?.hasError('required')">
+                            You must fill this field</div>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('linkedinLink')?.touched && leadInformationForm.get('linkedinLink')?.hasError('pattern')">
+                            Please provide us with valid linkedin link</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -43,6 +59,9 @@
                         <input class="form-control" formControlName='location' id="floatingInputLocation" type="text"
                             placeholder="Location" />
                         <label for="floatingInputLocation">Location</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('location')?.touched && leadInformationForm.get('location')?.hasError('required')">
+                            You must fill this field</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -50,6 +69,9 @@
                         <input class="form-control" formControlName='industry' id="floatingInputIndustry" type="text"
                             placeholder="Industry" />
                         <label for="floatingInputIndustry">Industry</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('industry')?.touched && leadInformationForm.get('industry')?.hasError('required')">
+                            You must fill this field</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -57,6 +79,9 @@
                         <input class="form-control" formControlName='annualRevenue' id="floatingInputRevenue" type="text"
                             placeholder="revenue" />
                         <label for="floatingInputRevenue">Annual revenue </label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('annualRevenue')?.touched && leadInformationForm.get('annualRevenue')?.hasError('required')">
+                            You must fill this field</div>
                     </div>
                 </div>
             </ng-container>
@@ -69,6 +94,8 @@
                             <label class="form-check-label" for="inlineCheckbox1">{{item.name}}</label>
                         </div>
                     </div>
+                    <div class="text-danger fs--1" *ngIf="activitiesForm.touched && activitiesForm.hasError('minOneSelected')">
+                        Please choose at least one</div>
                 </div>
             </ng-container>
             <h4 class="mt-6">Company Size</h4>
@@ -78,18 +105,25 @@
                         <input class="form-control" formControlName='total' id="floatingInputTotalSize" type="number"
                             placeholder="Total size" />
                         <label for="floatingInputTotalSize">Total size</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="companySizeForm.get('total')?.touched && companySizeForm.get('total')?.invalid">
+                            A positive number is required</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-floating">
                         <input class="form-control" formControlName='dev' id="floatingInputDevSize" type="number" placeholder="Dev Size" />
                         <label for="floatingInputDevSize">Dev Size</label>
+                        <div class="text-danger fs--1" *ngIf="companySizeForm.get('dev')?.touched && companySizeForm.get('dev')?.invalid">
+                            A positive number is required</div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-floating">
                         <input class="form-control" formControlName='fe' id="floatingInputFESize" type="number" placeholder="FE Size" />
                         <label for="floatingInputFESize">FE Size</label>
+                        <div class="text-danger fs--1" *ngIf="companySizeForm.get('fe')?.touched && companySizeForm.get('fe')?.invalid">
+                            A positive number is required</div>
                     </div>
                 </div>
             </ng-container>
@@ -125,6 +159,8 @@
                 <select class="form-select form-select-lg mb-3" formControlName='status'>
                     <option *ngFor="let item of statusList$|async" [value]="item">{{item}}</option>
                 </select>
+                <div class="text-danger fs--1" *ngIf="leadForm.get('status')?.touched && leadForm.get('status')?.hasError('required')">
+                    You must choose a status</div>
             </div>
             <h4 class="mt-6">Notes</h4>
             <div class="col-12">
@@ -135,7 +171,7 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-end mt-6">
-                <button class="btn btn-primary" (click)="onLeadFormSubmitted()" [disabled]="!leadForm.valid">Create lead</button>
+                <button class="btn btn-primary" (click)="onLeadFormSubmitted()">Create lead</button>
             </div>
         </form>
     </div>
