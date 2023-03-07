@@ -36,7 +36,7 @@ export class LeadListComponent {
 
     return leadList.map((lead) => ({
       name: lead.name,
-      websiteLink: lead.websiteLink,
+      websiteLink: lead.websiteLink.includes('http') ? lead.websiteLink : `http://${lead.websiteLink}`,
       annualRevenue: lead.annualRevenue,
       companySize: lead.companySize,
       hiring: lead.hiring,
