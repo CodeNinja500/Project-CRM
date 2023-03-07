@@ -45,6 +45,20 @@ export class AuthService {
     );
   }
 
+  public refreshToken(refreshToken: string): Observable<UserCredentialsModel> {
+    return this._httpClient
+      .post<AuthLoginResponse<UserCredentialsModel>>(`${environment.apiUrl}/auth/refresh`, {
+        data: { refreshToken: refreshToken }
+      })
+      .pipe(
+        map((response) => ({
+          accessToken: response.data.accessToken,
+          refreshToken: response.data.refreshToken
+        })),
+        tap((tokens) => this.logInUser(tokens, true))
+      );
+  }
+
   private logInUser(tokens: UserCredentialsModel, rememberMe: boolean): void {
     this._accessTokenSubject.next(tokens.accessToken);
     this._refreshTokenSubject.next(tokens.refreshToken);
