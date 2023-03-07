@@ -110,6 +110,8 @@ export class LeadCreateComponent {
         })
         .pipe(take(1))
         .subscribe();
+    } else {
+      this.leadForm.markAllAsTouched();
     }
   }
 }
