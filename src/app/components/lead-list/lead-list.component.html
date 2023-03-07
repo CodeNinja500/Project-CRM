@@ -8,7 +8,7 @@
                 <div class="col-auto">
                     <div class="d-md-flex justify-content-between">
                         <div>
-                            <ng-container *ngIf="isAdmin$ | async"><button class="btn btn-primary me-4"><span
+                            <ng-container *ngIf="isAdmin$ | async"><button class="btn btn-primary me-4" routerLink="/create-lead"><span
                                         class="fas fa-plus me-2"></span>Create Lead</button></ng-container>
 
                         </div>
@@ -51,10 +51,8 @@
                                     </div>
                                 </td>
                                 <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
-                                    <div class="d-flex align-items-center">
-                                        <div *ngFor="let tag of lead.activityIds">
-                                            <div><span class="badge badge-phoenix badge-phoenix-warning">{{ tag }}</span></div>
-                                        </div>
+                                    <div *ngFor="let tag of lead.activityIds">
+                                        <div><span class="badge badge-phoenix badge-phoenix-warning">{{ tag }}</span></div>
                                     </div>
                                 </td>
                                 <td class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">

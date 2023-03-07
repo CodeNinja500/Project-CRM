@@ -1,0 +1,180 @@
+<div class="border-bottom mb-7 mx-n3 px-2 mx-lg-n6 px-lg-6">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="d-sm-flex justify-content-between">
+                <h2 class="mb-4">Create a new lead</h2>
+                <div class="d-flex mb-3">
+                    <button class="btn btn-phoenix-primary me-2 px-6" routerLink="/leads">Cancel</button>
+                    <button class="btn btn-primary" (click)="onLeadFormSubmitted()">Create
+                        lead</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class=" row">
+    <div class="col-xl-12">
+        <form class="row g-3 mb-9" [formGroup]="leadForm">
+            <ng-container formGroupName='leadInfo'>
+                <h4 class="mb-3">Lead Information </h4>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='companyName' id="floatingInputCompanyname" type="text"
+                            placeholder="Company name" />
+                        <label for="floatingInputCompanyname">Company name</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('companyName')?.touched && leadInformationForm.get('companyName')?.hasError('required')">
+                            You must fill this field
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='websiteLink' id="floatingInputWebsitelink" type="text"
+                            placeholder="Website link" />
+                        <label for="floatingInputWebsitelink">Website link</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('websiteLink')?.touched && leadInformationForm.get('websiteLink')?.hasError('required')">
+                            You must fill this field</div>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('websiteLink')?.touched && leadInformationForm.get('websiteLink')?.hasError('pattern')">
+                            Link must start with http://www. or https://www. or www.</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='linkedinLink' id="floatingInputLinkedin" type="text"
+                            placeholder="Linkedin link" />
+                        <label for="floatingInputLinkedin">Linkedin link</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('linkedinLink')?.touched && leadInformationForm.get('linkedinLink')?.hasError('required')">
+                            You must fill this field</div>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('linkedinLink')?.touched && leadInformationForm.get('linkedinLink')?.hasError('pattern')">
+                            Please provide us with valid linkedin link</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='location' id="floatingInputLocation" type="text"
+                            placeholder="Location" />
+                        <label for="floatingInputLocation">Location</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('location')?.touched && leadInformationForm.get('location')?.hasError('required')">
+                            You must fill this field</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='industry' id="floatingInputIndustry" type="text"
+                            placeholder="Industry" />
+                        <label for="floatingInputIndustry">Industry</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('industry')?.touched && leadInformationForm.get('industry')?.hasError('required')">
+                            You must fill this field</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='annualRevenue' id="floatingInputRevenue" type="text"
+                            placeholder="revenue" />
+                        <label for="floatingInputRevenue">Annual revenue </label>
+                        <div class="text-danger fs--1"
+                            *ngIf="leadInformationForm.get('annualRevenue')?.touched && leadInformationForm.get('annualRevenue')?.hasError('required')">
+                            You must fill this field</div>
+                    </div>
+                </div>
+            </ng-container>
+            <h4 class="mt-6">Activities</h4>
+            <ng-container formGroupName='activities'>
+                <div class="col-12">
+                    <div class="form-floating">
+                        <div class="form-check form-check-inline" *ngFor="let item of activityList$|async">
+                            <input class="form-check-input" [formControlName]='item.id' id="inlineCheckbox1" type="checkbox" />
+                            <label class="form-check-label" for="inlineCheckbox1">{{item.name}}</label>
+                        </div>
+                    </div>
+                    <div class="text-danger fs--1" *ngIf="activitiesForm.touched && activitiesForm.hasError('minOneSelected')">
+                        Please choose at least one</div>
+                </div>
+            </ng-container>
+            <h4 class="mt-6">Company Size</h4>
+            <ng-container formGroupName='companySize'>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='total' id="floatingInputTotalSize" type="number"
+                            placeholder="Total size" />
+                        <label for="floatingInputTotalSize">Total size</label>
+                        <div class="text-danger fs--1"
+                            *ngIf="companySizeForm.get('total')?.touched && companySizeForm.get('total')?.invalid">
+                            A positive number is required</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='dev' id="floatingInputDevSize" type="number" placeholder="Dev Size" />
+                        <label for="floatingInputDevSize">Dev Size</label>
+                        <div class="text-danger fs--1" *ngIf="companySizeForm.get('dev')?.touched && companySizeForm.get('dev')?.invalid">
+                            A positive number is required</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <input class="form-control" formControlName='fe' id="floatingInputFESize" type="number" placeholder="FE Size" />
+                        <label for="floatingInputFESize">FE Size</label>
+                        <div class="text-danger fs--1" *ngIf="companySizeForm.get('fe')?.touched && companySizeForm.get('fe')?.invalid">
+                            A positive number is required</div>
+                    </div>
+                </div>
+            </ng-container>
+            <h4 class="mt-6">Hiring Information</h4>
+            <ng-container formGroupName='hiring'>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" formControlName='active' id="flexSwitchCheckDefault" type="checkbox" />
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Is currently hiring?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" formControlName='junior' id="flexSwitchCheckDefault2" type="checkbox" />
+                            <label class="form-check-label" for="flexSwitchCheckDefault2">Is hiring junior?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-floating">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" formControlName='talentProgram' id="flexSwitchCheckDefault3" type="checkbox" />
+                            <label class="form-check-label" for="flexSwitchCheckDefault3">Has Talent program?</label>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <h4 class="mt-6">Status</h4>
+            <div class="col-12">
+                <select class="form-select form-select-lg mb-3" formControlName='status'>
+                    <option *ngFor="let item of statusList$|async" [value]="item">{{item}}</option>
+                </select>
+                <div class="text-danger fs--1" *ngIf="leadForm.get('status')?.touched && leadForm.get('status')?.hasError('required')">
+                    You must choose a status</div>
+            </div>
+            <h4 class="mt-6">Notes</h4>
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control" formControlName='notes' id="floatingProjectOverview" placeholder="Leave a comment here"
+                        style="height: 128px"></textarea>
+                    <label for="floatingProjectOverview">Lead description</label>
+                </div>
+            </div>
+            <div class="text-danger fs--1" *ngIf="leadForm.hasError('errorFromServer')">
+                {{leadForm.getError('errorFromServer')}}</div>
+            <div class="col-12 d-flex justify-content-end mt-6">
+                <button class="btn btn-primary" (click)="onLeadFormSubmitted()">Create lead</button>
+            </div>
+        </form>
+    </div>
+</div>
