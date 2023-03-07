@@ -1,11 +1,26 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../models/activity.model';
 import { ActivitiesService } from '../../services/activities.service';
 import { StatusService } from '../../services/status.service';
 import { LeadsService } from '../../services/leads.service';
+
+export const minOneSelected: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const howManySelected = Object.keys(control.value).reduce((a: string[], c: string) => {
+    if (control.value[c]) {
+      return [...a, c];
+    } else {
+      return a;
+    }
+  }, []).length;
+  if (howManySelected > 0) {
+    return null;
+  } else {
+    return { minOneSelected: true };
+  }
+};
 
 @Component({
   selector: 'app-lead-create',
@@ -22,19 +37,22 @@ export class LeadCreateComponent {
 
   readonly leadInformationForm: FormGroup = new FormGroup({
     companyName: new FormControl('', [Validators.required]),
-    websiteLink: new FormControl('', [Validators.required]),
-    linkedinLink: new FormControl('', [Validators.required]),
+    websiteLink: new FormControl('', [Validators.required, Validators.pattern(/^((https?:\/\/)?(www\.)?).+\.\w+/)]),
+    linkedinLink: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^((https?:\/\/)?(www\.)?linkedin\.com\/)\w+/)
+    ]),
     location: new FormControl('', [Validators.required]),
     industry: new FormControl('', [Validators.required]),
     annualRevenue: new FormControl('', [Validators.required])
   });
 
-  readonly activitiesForm: FormGroup = new FormGroup({});
+  readonly activitiesForm: FormGroup = new FormGroup({}, [minOneSelected]);
 
   readonly companySizeForm: FormGroup = new FormGroup({
-    total: new FormControl('', [Validators.required]),
-    dev: new FormControl('', [Validators.required]),
-    fe: new FormControl('', [Validators.required])
+    total: new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]),
+    dev: new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]),
+    fe: new FormControl('', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)])
   });
 
   readonly hiringForm: FormGroup = new FormGroup({
@@ -49,7 +67,7 @@ export class LeadCreateComponent {
     companySize: this.companySizeForm,
     hiring: this.hiringForm,
     status: new FormControl('', [Validators.required]),
-    notes: new FormControl()
+    notes: new FormControl('')
   });
 
   constructor(
