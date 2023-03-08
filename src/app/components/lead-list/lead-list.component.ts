@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { LeadModel } from '../../models/lead.model';
 import { ActivityModel } from '../../models/activity.model';
 import { LeadsService } from '../../services/leads.service';
 import { UserService } from '../../services/user.service';
 import { ActivitiesService } from '../../services/activities.service';
+import { UiStateService } from '../../services/ui-state.service';
 
 @Component({
   selector: 'app-lead-list',
@@ -25,10 +27,13 @@ export class LeadListComponent {
 
   readonly activityList$: Observable<ActivityModel[]> = this._activitiesService.getAll();
 
+  public isFilterModalVisible$: Observable<boolean> = this._uiStateService.isFilterModalVisible$;
+
   constructor(
     private _leadsService: LeadsService,
     private _userService: UserService,
-    private _activitiesService: ActivitiesService
+    private _activitiesService: ActivitiesService,
+    private _uiStateService: UiStateService
   ) {}
 
   private mapLeadListActivities(leadList: LeadModel[], activites: ActivityModel[]): LeadModel[] {
@@ -45,5 +50,13 @@ export class LeadListComponent {
       location: lead.location,
       activityIds: lead.activityIds.map((activityId) => activitiesMap[activityId])
     }));
+  }
+
+  public showFilterModal(): void {
+    this._uiStateService.showFilterModal();
+  }
+
+  public hideFilterModal(): void {
+    this._uiStateService.hideFilterModal();
   }
 }
