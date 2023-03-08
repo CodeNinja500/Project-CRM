@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserModel } from '../../models/user.model';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { UiStateService } from '../../services/ui-state.service';
 
 @Component({
   selector: 'app-leads',
@@ -13,20 +13,18 @@ import { UserService } from '../../services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeadsComponent {
-  private _isUserMenuVisibleSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public isUserMenuVisible$: Observable<boolean> = this._isUserMenuVisibleSubject.asObservable();
-
   readonly userDetails$: Observable<UserModel> = this._userService.me();
+  readonly isUserMenuVisible$: Observable<boolean> = this._uiStateService.isUserMenuVisible$;
 
-  constructor(private _authService: AuthService, private _router: Router, private _userService: UserService) {}
+  constructor(
+    private _authService: AuthService,
+    private _router: Router,
+    private _userService: UserService,
+    private _uiStateService: UiStateService
+  ) {}
 
   public toggleUserMenu(): void {
-    this.isUserMenuVisible$
-      .pipe(
-        take(1),
-        tap((isVisible) => this._isUserMenuVisibleSubject.next(!isVisible))
-      )
-      .subscribe();
+    this._uiStateService.toggleUserMenu();
   }
 
   public signUserOut(): void {

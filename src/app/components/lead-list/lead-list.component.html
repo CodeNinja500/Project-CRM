@@ -1,4 +1,4 @@
-<ng-container *ngIf="leadList$|async as leadList; else loading">
+<ng-container *ngIf="leadList$|async as leadList; else loading" class='modal-open'>
     <div class="pb-9">
         <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else singleLead">Companies</ng-container>
             <ng-template #singleLead>Company</ng-template>
@@ -15,7 +15,55 @@
                     </div>
                 </div>
                 <div class="col-auto">
-
+                    <div class="d-flex">
+                        <button class="btn px-3 btn-phoenix-secondary" type="button" data-boundary="window" aria-haspopup="true"
+                            aria-expanded="false" data-bs-reference="parent" (click)="showFilterModal()"><span
+                                class="fa-solid fa-filter text-primary" data-fa-transform="down-3"></span></button>
+                        <div class="modal fade" [ngClass]="{show: isFilterModalVisible$|async,showModal: isFilterModalVisible$|async}"
+                            id="filterModal" tabindex="-1" aria-modal="true" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border">
+                                    <form id="addEventForm" autocomplete="off">
+                                        <div class="modal-header border-200 p-4">
+                                            <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5><button class="btn p-1 text-900"
+                                                type="button" data-bs-dismiss="modal" aria-label="Close" (click)="hideFilterModal()"><span
+                                                    class="fas fa-times fs--1"></span></button>
+                                        </div>
+                                        <div class="modal-body pt-4 pb-2 px-4">
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000" for="leadStatus">Lead
+                                                    Status</label><select class="form-select" id="leadStatus">
+                                                    <option value="newLead" selected="selected">New Lead</option>
+                                                    <option value="coldLead">Cold Lead</option>
+                                                    <option value="wonLead">Won Lead</option>
+                                                    <option value="canceled">Canceled</option>
+                                                </select></div>
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000" for="createDate">Create
+                                                    Date</label><select class="form-select" id="createDate">
+                                                    <option value="today" selected="selected">Today</option>
+                                                    <option value="last7Days">Last 7 Days</option>
+                                                    <option value="last30Days">Last 30 Days</option>
+                                                    <option value="chooseATimePeriod">Choose a time period</option>
+                                                </select></div>
+                                            <div class="mb-3"><label class="fw-bold mb-2 text-1000"
+                                                    for="designation">Designation</label><select class="form-select" id="designation">
+                                                    <option value="VPAccounting" selected="selected">VP Accounting</option>
+                                                    <option value="ceo">CEO</option>
+                                                    <option value="creativeDirector">Creative Director</option>
+                                                    <option value="accountant">Accountant</option>
+                                                    <option value="executiveManager">Executive Manager</option>
+                                                </select></div>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 border-0 pt-3">
+                                            <button class="btn btn-sm btn-phoenix-primary px-4 fs--2 my-0" type="submit">
+                                                <span class="fas fa-arrows-rotate me-2 fs--2"></span>Reset
+                                            </button>
+                                            <button class="btn btn-sm btn-primary px-9 fs--2 my-0" type="submit">Done</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="px-4 mx-lg-n6 px-lg-6">
@@ -117,3 +165,4 @@
         </div>
     </div>
 </footer>
+<div class="fade" [ngClass]="{'modal-backdrop': isFilterModalVisible$|async,show: isFilterModalVisible$|async}"></div>
