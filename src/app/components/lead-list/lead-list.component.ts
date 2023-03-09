@@ -18,6 +18,7 @@ import { UiStateService } from '../../services/ui-state.service';
 })
 export class LeadListComponent {
   readonly activityList$: Observable<ActivityModel[]> = this._activitiesService.getAll().pipe(
+    take(1),
     tap((data) => this.onActivityListAddControls(data)),
     shareReplay(1)
   );
@@ -27,7 +28,7 @@ export class LeadListComponent {
   readonly filterForm: FormGroup = new FormGroup({ scope: this.scopeForm, size: this.sizeForm });
 
   readonly leadListFiltered$: Observable<LeadModel[]> = combineLatest([
-    this._leadsService.getAll(),
+    this._leadsService.getAll().pipe(take(1)),
     this.scopeForm.valueChanges.pipe(startWith([])),
     this.sizeForm.valueChanges.pipe(startWith([]))
   ]).pipe(
@@ -53,7 +54,7 @@ export class LeadListComponent {
     )
   );
 
-  readonly isAdmin$: Observable<boolean> = this._userService.isAdmin();
+  readonly isAdmin$: Observable<boolean> = this._userService.isAdmin().pipe(take(1));
 
   readonly leadSizeList$: Observable<LeadSizeModel[]> = this._leadsService.getLeadSizeList().pipe(
     tap((data) => this.onLeadSizeListAddControls(data)),
