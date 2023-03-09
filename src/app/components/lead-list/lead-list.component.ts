@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { LeadModel } from '../../models/lead.model';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../models/activity.model';
+import { LeadModel } from '../../models/lead.model';
+import { LeadSizeModel } from '../../models/lead-size.model';
 import { LeadsService } from '../../services/leads.service';
 import { UserService } from '../../services/user.service';
 import { ActivitiesService } from '../../services/activities.service';
@@ -15,19 +17,31 @@ import { UiStateService } from '../../services/ui-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeadListComponent {
+  readonly activityList$: Observable<ActivityModel[]> = this._activitiesService.getAll().pipe(
+    tap((data) => this.onActivityListAddControls(data)),
+    shareReplay(1)
+  );
+
   readonly leadList$: Observable<LeadModel[]> = this._leadsService
     .getAll()
     .pipe(
       switchMap((leadList) =>
-        this._activitiesService.getAll().pipe(map((activityList) => this.mapLeadListActivities(leadList, activityList)))
+        this.activityList$.pipe(map((activityList) => this.mapLeadListActivities(leadList, activityList)))
       )
     );
 
   readonly isAdmin$: Observable<boolean> = this._userService.isAdmin();
 
-  readonly activityList$: Observable<ActivityModel[]> = this._activitiesService.getAll();
+  readonly leadSizeList$: Observable<LeadSizeModel[]> = this._leadsService.getLeadSizeList().pipe(
+    tap((data) => this.onLeadSizeListAddControls(data)),
+    shareReplay(1)
+  );
 
-  public isFilterModalVisible$: Observable<boolean> = this._uiStateService.isFilterModalVisible$;
+  public readonly isFilterModalVisible$: Observable<boolean> = this._uiStateService.isFilterModalVisible$;
+
+  readonly scopeForm: FormGroup = new FormGroup({});
+  readonly sizeForm: FormGroup = new FormGroup({});
+  readonly filterForm: FormGroup = new FormGroup({ scope: this.scopeForm, size: this.sizeForm });
 
   constructor(
     private _leadsService: LeadsService,
@@ -45,7 +59,7 @@ export class LeadListComponent {
       annualRevenue: lead.annualRevenue,
       companySize: lead.companySize,
       hiring: lead.hiring,
-      industry: lead.industry,
+      industry: lead.industry.toUpperCase(),
       linkedinLink: lead.linkedinLink,
       location: lead.location,
       activityIds: lead.activityIds.map((activityId) => activitiesMap[activityId])
@@ -58,5 +72,21 @@ export class LeadListComponent {
 
   public hideFilterModal(): void {
     this._uiStateService.hideFilterModal();
+  }
+
+  private onActivityListAddControls(activityList: ActivityModel[]): void {
+    activityList.forEach((activity) =>
+      this.scopeForm.addControl(activity.id, new FormControl(false, { nonNullable: true }))
+    );
+  }
+
+  private onLeadSizeListAddControls(leadSizeList: LeadSizeModel[]): void {
+    leadSizeList.forEach((leadSize) =>
+      this.sizeForm.addControl(leadSize.rangeId, new FormControl(false, { nonNullable: true }))
+    );
+  }
+
+  public onResetButtonClearControls(): void {
+    this.filterForm.reset();
   }
 }
