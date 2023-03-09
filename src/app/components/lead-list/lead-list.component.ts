@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { filter, map, shareReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { ActivityModel } from '../../models/activity.model';
 import { LeadModel } from '../../models/lead.model';
 import { LeadSizeModel } from '../../models/lead-size.model';
@@ -22,13 +22,36 @@ export class LeadListComponent {
     shareReplay(1)
   );
 
-  readonly leadList$: Observable<LeadModel[]> = this._leadsService
-    .getAll()
-    .pipe(
-      switchMap((leadList) =>
-        this.activityList$.pipe(map((activityList) => this.mapLeadListActivities(leadList, activityList)))
-      )
-    );
+  readonly scopeForm: FormGroup = new FormGroup({});
+  readonly sizeForm: FormGroup = new FormGroup({});
+  readonly filterForm: FormGroup = new FormGroup({ scope: this.scopeForm, size: this.sizeForm });
+
+  readonly leadListFiltered$: Observable<LeadModel[]> = combineLatest([
+    this._leadsService.getAll(),
+    this.scopeForm.valueChanges.pipe(startWith([])),
+    this.sizeForm.valueChanges.pipe(startWith([]))
+  ]).pipe(
+    map(([leadList, scopes, sizes]) => {
+      let selectedScopes = Object.keys(scopes).reduce((a: string[], c) => {
+        if (scopes[c]) {
+          return [...a, c];
+        } else {
+          return a;
+        }
+      }, []);
+
+      return leadList.filter((lead) => {
+        let setOfIds = new Set(lead.activityIds);
+        return selectedScopes.every((scope) => setOfIds.has(scope)) || scopes.length === 0;
+      });
+    })
+  );
+
+  readonly leadList$: Observable<LeadModel[]> = this.leadListFiltered$.pipe(
+    switchMap((leadList) =>
+      this.activityList$.pipe(map((activityList) => this.mapLeadListActivities(leadList, activityList)))
+    )
+  );
 
   readonly isAdmin$: Observable<boolean> = this._userService.isAdmin();
 
@@ -38,10 +61,6 @@ export class LeadListComponent {
   );
 
   public readonly isFilterModalVisible$: Observable<boolean> = this._uiStateService.isFilterModalVisible$;
-
-  readonly scopeForm: FormGroup = new FormGroup({});
-  readonly sizeForm: FormGroup = new FormGroup({});
-  readonly filterForm: FormGroup = new FormGroup({ scope: this.scopeForm, size: this.sizeForm });
 
   constructor(
     private _leadsService: LeadsService,
