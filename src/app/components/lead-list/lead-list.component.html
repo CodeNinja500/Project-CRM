@@ -1,7 +1,7 @@
 <ng-container *ngIf="leadList$|async as leadList; else loading" class='modal-open'>
     <div class="pb-9">
-        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else singleLead">Companies</ng-container>
-            <ng-template #singleLead>Company</ng-template>
+        <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else multiLeads">Company</ng-container>
+            <ng-template #multiLeads>Companies</ng-template>
         </h2>
         <div id="dealsTable" data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
             <div class="row g-3 justify-content-between mb-4">
