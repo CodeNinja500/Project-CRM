@@ -11,7 +11,6 @@ export class ProfileCompletedGuard implements CanActivate {
   constructor(private _userService: UserService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    console.log('complete profile activated');
     return this._userService.checkUserBio().pipe(
       take(1),
       catchError((error: HttpErrorResponse) => {
