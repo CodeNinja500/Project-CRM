@@ -33,17 +33,17 @@
                                             <div formGroupName='scope' class="mb-3">
                                                 <label class="fw-bold mb-2 text-1000" for="leadStatus">Scope</label>
                                                 <div class="form-check" *ngFor="let item of activityList$|async">
-                                                    <input class="form-check-input" [formControlName]='item.id' id="inlineCheckbox1"
+                                                    <input class="form-check-input" [formControlName]='item.id' [id]="item.id"
                                                         type="checkbox" />
-                                                    <label class="form-check-label" for="inlineCheckbox1">{{item.name}}</label>
+                                                    <label class="form-check-label" [for]="item.id">{{item.name}}</label>
                                                 </div>
                                             </div>
                                             <div formGroupName='size' class="mb-3">
                                                 <label class="fw-bold mb-2 text-1000" for="createDate">Lead Size</label>
                                                 <div class="form-check" *ngFor="let item of leadSizeList$|async">
-                                                    <input class="form-check-input" [formControlName]='item.rangeId' id="inlineCheckbox1"
+                                                    <input class="form-check-input" [formControlName]='item.rangeId' [id]="item.rangeId"
                                                         type="checkbox" />
-                                                    <label class="form-check-label" for="inlineCheckbox1">{{item.from}}
+                                                    <label class="form-check-label" [for]="item.rangeId">{{item.from}}
                                                         <ng-container *ngIf="item.to; else toInfinity">-</ng-container>
                                                         <ng-template #toInfinity>+</ng-template>
                                                         {{item.to}}</label>
