@@ -27,24 +27,58 @@ export class LeadListComponent {
   readonly sizeForm: FormGroup = new FormGroup({});
   readonly filterForm: FormGroup = new FormGroup({ scope: this.scopeForm, size: this.sizeForm });
 
-  readonly leadListFiltered$: Observable<LeadModel[]> = combineLatest([
-    this._leadsService.getAll().pipe(take(1)),
-    this.scopeForm.valueChanges.pipe(startWith([])),
-    this.sizeForm.valueChanges.pipe(startWith([]))
-  ]).pipe(
-    map(([leadList, scopes, sizes]) => {
-      let selectedScopes = Object.keys(scopes).reduce((a: string[], c) => {
+  readonly leadSizeList$: Observable<LeadSizeModel[]> = this._leadsService.getLeadSizeList().pipe(
+    tap((data) => this.onLeadSizeListAddControls(data)),
+    shareReplay(1)
+  );
+
+  readonly selectedScopes$: Observable<string[]> = this.scopeForm.valueChanges.pipe(
+    startWith([]),
+    map((scopes) =>
+      Object.keys(scopes).reduce((a: string[], c) => {
         if (scopes[c]) {
           return [...a, c];
         } else {
           return a;
         }
-      }, []);
+      }, [])
+    )
+  );
 
-      return leadList.filter((lead) => {
-        let setOfIds = new Set(lead.activityIds);
-        return selectedScopes.every((scope) => setOfIds.has(scope)) || scopes.length === 0;
-      });
+  readonly selectedSizeIds$: Observable<string[]> = this.sizeForm.valueChanges.pipe(startWith([])).pipe(
+    map((sizeIds) =>
+      Object.keys(sizeIds).reduce((a: string[], c) => {
+        if (sizeIds[c]) {
+          return [...a, c];
+        } else {
+          return a;
+        }
+      }, [])
+    )
+  );
+
+  readonly selectedSizesList$: Observable<LeadSizeModel[]> = combineLatest([
+    this.selectedSizeIds$,
+    this.leadSizeList$
+  ]).pipe(map(([sizeIds, leadSizes]) => this.mapSizeIdsToSizeModelList(leadSizes, sizeIds)));
+
+  readonly leadListFiltered$: Observable<LeadModel[]> = combineLatest([
+    this._leadsService.getAll().pipe(take(1)),
+    this.selectedScopes$,
+    this.selectedSizesList$
+  ]).pipe(
+    map(([leadList, scopes, sizes]) => {
+      return leadList
+        .filter((lead) => {
+          let setOfIds = new Set(lead.activityIds);
+          return scopes.every((scope) => setOfIds.has(scope)) || scopes.length === 0;
+        })
+        .filter(
+          (lead) =>
+            sizes.find(
+              (size) => lead.companySize.total >= size.from && (size.to ? lead.companySize.total <= size.to : true)
+            ) || sizes.length === 0
+        );
     })
   );
 
@@ -55,11 +89,6 @@ export class LeadListComponent {
   );
 
   readonly isAdmin$: Observable<boolean> = this._userService.isAdmin().pipe(take(1));
-
-  readonly leadSizeList$: Observable<LeadSizeModel[]> = this._leadsService.getLeadSizeList().pipe(
-    tap((data) => this.onLeadSizeListAddControls(data)),
-    shareReplay(1)
-  );
 
   public readonly isFilterModalVisible$: Observable<boolean> = this._uiStateService.isFilterModalVisible$;
 
@@ -108,5 +137,10 @@ export class LeadListComponent {
 
   public onResetButtonClearControls(): void {
     this.filterForm.reset();
+  }
+
+  private mapSizeIdsToSizeModelList(sizeList: LeadSizeModel[], sizeIds: string[]): LeadSizeModel[] {
+    const sizeMap = sizeList.reduce((a, c) => ({ ...a, [c.rangeId]: c }), {} as Record<string, LeadSizeModel>);
+    return sizeIds.map((sizeId) => sizeMap[sizeId]);
   }
 }
