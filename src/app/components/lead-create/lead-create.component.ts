@@ -31,9 +31,10 @@ export const minOneSelected: ValidatorFn = (control: AbstractControl): Validatio
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeadCreateComponent {
-  readonly activityList$: Observable<ActivityModel[]> = this._activitiesService
-    .getAll()
-    .pipe(tap((data) => this.onActivityListCreateControls(data)));
+  readonly activityList$: Observable<ActivityModel[]> = this._activitiesService.getAll().pipe(
+    take(1),
+    tap((data) => this.onActivityListCreateControls(data))
+  );
 
   readonly statusList$: Observable<string[]> = this._statusService.getAll();
 

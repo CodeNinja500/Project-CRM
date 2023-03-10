@@ -90,8 +90,8 @@
                 <div class="col-12">
                     <div class="form-floating">
                         <div class="form-check form-check-inline" *ngFor="let item of activityList$|async">
-                            <input class="form-check-input" [formControlName]='item.id' id="inlineCheckbox1" type="checkbox" />
-                            <label class="form-check-label" for="inlineCheckbox1">{{item.name}}</label>
+                            <input class="form-check-input" [formControlName]='item.id' [id]="item.id" type="checkbox" />
+                            <label class="form-check-label" [for]="item.id">{{item.name}}</label>
                         </div>
                     </div>
                     <div class="text-danger fs--1" *ngIf="activitiesForm.touched && activitiesForm.hasError('minOneSelected')">
