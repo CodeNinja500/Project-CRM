@@ -69,7 +69,6 @@ export class LeadCreateComponent {
     activities: this.activitiesForm,
     companySize: this.companySizeForm,
     hiring: this.hiringForm,
-    status: new FormControl('', [Validators.required]),
     notes: new FormControl('')
   });
 

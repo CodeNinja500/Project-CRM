@@ -154,14 +154,6 @@
                     </div>
                 </div>
             </ng-container>
-            <h4 class="mt-6">Status</h4>
-            <div class="col-12">
-                <select class="form-select form-select-lg mb-3" formControlName='status'>
-                    <option *ngFor="let item of statusList$|async" [value]="item">{{item}}</option>
-                </select>
-                <div class="text-danger fs--1" *ngIf="leadForm.get('status')?.touched && leadForm.get('status')?.hasError('required')">
-                    You must choose a status</div>
-            </div>
             <h4 class="mt-6">Notes</h4>
             <div class="col-12">
                 <div class="form-floating">
