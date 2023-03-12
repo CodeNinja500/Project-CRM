@@ -3,7 +3,7 @@
         <h2 class="mb-4">{{leadList.length}} <ng-container *ngIf="leadList.length==1;else multiLeads">Company</ng-container>
             <ng-template #multiLeads>Companies</ng-template>
         </h2>
-        <div id="dealsTable" data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'>
+        <div id="dealsTable">
             <div class="row g-3 justify-content-between mb-4">
                 <div class="col-auto">
                     <div class="d-md-flex justify-content-between">
@@ -17,17 +17,20 @@
                 <div class="col-auto">
                     <div class="d-flex">
                         <button class="btn px-3 btn-phoenix-secondary" type="button" data-boundary="window" aria-haspopup="true"
-                            aria-expanded="false" data-bs-reference="parent" (click)="showFilterModal()"><span
-                                class="fa-solid fa-filter text-primary" data-fa-transform="down-3"></span></button>
+                            aria-expanded="false" data-bs-reference="parent" (click)="showFilterModal()">
+                            <span class="fa-solid fa-filter text-primary" data-fa-transform="down-3"></span>
+                        </button>
                         <div class="modal fade" [ngClass]="{show: isFilterModalVisible$|async,showModal: isFilterModalVisible$|async}"
                             id="filterModal" tabindex="-1" aria-modal="true" role="dialog">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border">
                                     <form [formGroup]="filterForm" id="addEventForm" autocomplete="off">
                                         <div class="modal-header border-200 p-4">
-                                            <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5><button class="btn p-1 text-900"
-                                                type="button" data-bs-dismiss="modal" aria-label="Close" (click)="hideFilterModal()"><span
-                                                    class="fas fa-times fs--1"></span></button>
+                                            <h5 class="modal-title text-1000 fs-2 lh-sm">Filter</h5>
+                                            <button class="btn p-1 text-900" type="button" data-bs-dismiss="modal" aria-label="Close"
+                                                (click)="hideFilterModal()">
+                                                <span class="fas fa-times fs--1"></span>
+                                            </button>
                                         </div>
                                         <div class="modal-body pt-4 pb-2 px-4">
                                             <div formGroupName='scope' class="mb-3">
@@ -90,10 +93,11 @@
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static" *ngFor="let lead of leadList">
                                 <td class="name align-middle white-space-nowrap">
                                     <div class="d-flex align-items-center">
-                                        <div><a class="fs-0 fw-bold" [href]="lead.websiteLink" target="_blank">{{lead.name}}</a>
-                                            <div class="d-flex align-items-center justify-content-around">
-                                                <a [href]="lead.linkedinLink" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-                                                <a [href]="lead.websiteLink" target="_blank"><i class="fa-solid fa-link"></i></a>
+                                        <div>
+                                            <a class="fs-0 fw-bold" [href]="lead.websiteLink" target="_blank">{{lead.name}}</a>
+                                            <div class="d-flex align-items-center">
+                                                <a [href]="lead.linkedinLink" target="_blank"><i class="fa-brands fa-linkedin mx-1"></i></a>
+                                                <a [href]="lead.websiteLink" target="_blank"><i class="fa-solid fa-link mx-1"></i></a>
                                             </div>
                                         </div>
                                     </div>
