@@ -25,4 +25,9 @@ export class UiStateService {
   public hideFilterModal(): void {
     this._isFilterModalVisibleSubject.next(false);
   }
+
+  public setUiToDefault(): void {
+    this._isUserMenuVisibleSubject.next(false);
+    this._isFilterModalVisibleSubject.next(false);
+  }
 }

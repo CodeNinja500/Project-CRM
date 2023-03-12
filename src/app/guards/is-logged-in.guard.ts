@@ -13,7 +13,6 @@ export class IsLoggedInGuard implements CanActivate {
   constructor(private _authService: AuthService, private _router: Router, private _userService: UserService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    console.log('is logged in guard activated');
     return this._userService.me().pipe(
       take(1),
       catchError((error: HttpErrorResponse) => of('error')),

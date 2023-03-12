@@ -13,7 +13,6 @@ export class AutoLoginGuard implements CanActivate {
   constructor(private _authService: AuthService, private _router: Router, private _userService: UserService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    console.log('auto login guard activated');
     return this._userService.me().pipe(
       take(1),
       catchError((error: HttpErrorResponse) => of('error')),
